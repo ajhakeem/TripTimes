@@ -7,21 +7,25 @@ import io.reactivex.schedulers.Schedulers
 import projects.jaseem.triptimes.state.Resource
 import projects.jaseem.triptimes.data.model.ArticleSearchModel
 import projects.jaseem.triptimes.data.model.toModel
-import projects.jaseem.triptimes.domain.RestApi
+import projects.jaseem.triptimes.domain.ArticleRepository
 import projects.jaseem.triptimes.domain.extensions.setError
 import projects.jaseem.triptimes.domain.extensions.setLoading
 import projects.jaseem.triptimes.domain.extensions.setSuccess
+import javax.inject.Inject
 
 
 class ArticleSearchViewModel
-    : ViewModel() {
+@Inject constructor(
+    private val articleRepository: ArticleRepository
+) : ViewModel() {
 
     val articleSearchModel = MutableLiveData<Resource<ArticleSearchModel>>()
     val disposable = CompositeDisposable()
 
     fun getArticle(searchTerm: String) {
+
         disposable.add(
-            RestApi.nyTimesClient.searchArticle(searchTerm)
+            articleRepository.searchArticles(searchTerm)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe {
                     articleSearchModel.setLoading()

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="12dp"
+    android:paddingTop="4dp"
+    android:paddingEnd="12dp"
+    android:paddingBottom="4dp">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gV67"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.67" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/vDivider"
+        app:layout_constraintEnd_toStartOf="@id/gV67"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        android:layout_marginTop="8dp"
+        tools:text="Title" />
+
+<!--    <TextView-->
+<!--        android:id="@+id/tvSnippet"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:ellipsize="end"-->
+<!--        android:maxLines="2"-->
+<!--        android:textColor="@android:color/black"-->
+<!--        android:textSize="12sp"-->
+<!--        android:visibility="gone"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/vDivider"-->
+<!--        app:layout_constraintEnd_toStartOf="@id/gV67"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/tvTitle"-->
+<!--        app:layout_constraintVertical_bias="0"-->
+<!--        android:layout_marginBottom="4dp"-->
+<!--        tools:text="This is a short snippet of the article, it should be no longer than 2 lines, and the end should be ellipsized if it is working correctly" />-->
+
+    <TextView
+        android:id="@+id/tvPublishedDate"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@android:color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@id/vDivider"
+        app:layout_constraintEnd_toStartOf="@id/gV67"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintVertical_bias="0"
+        android:layout_marginBottom="4dp"
+        tools:text="Published on 3/3/2020" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivThumbnail"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerInside"
+        app:layout_constraintStart_toEndOf="@id/gV67"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/vDivider"
+        app:layout_constraintHorizontal_bias="1"
+        tools:src="@drawable/ic_ny_times_logo" />
+
+    <View
+        android:id="@+id/vDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/silver"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

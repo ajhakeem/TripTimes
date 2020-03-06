@@ -20,11 +20,11 @@ data class SearchResponse(
         @SerializedName("snippet")
         val snippet: String,
         val lead_paragraph: String,
-        val source: String,
         @SerializedName("multimedia")
         val multimedia: List<MultimediaResponse>? = null,
         @SerializedName("headline")
         val headline: HeadlineResponse,
+        @SerializedName("pub_date")
         val pub_date: String
     )
 
