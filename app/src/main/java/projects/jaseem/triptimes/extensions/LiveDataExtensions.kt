@@ -1,4 +1,4 @@
-package projects.jaseem.triptimes.domain.extensions
+package projects.jaseem.triptimes.extensions
 
 import androidx.lifecycle.MutableLiveData
 import projects.jaseem.triptimes.state.Resource

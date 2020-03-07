@@ -14,5 +14,8 @@ interface NYTimesApiService {
     }
 
     @GET(searchBaseUrl + "articlesearch.json")
-    fun searchArticle(@Query("q") searchTerm: String, @Query("api-key") apiKey: String = API_KEY): Single<SearchResponse>
+    fun searchArticle(
+        @Query("q") searchTerm: String,
+        @Query("page") page: String,
+        @Query("api-key") apiKey: String = API_KEY): Single<SearchResponse>
 }

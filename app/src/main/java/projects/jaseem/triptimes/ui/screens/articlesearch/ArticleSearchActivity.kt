@@ -1,8 +1,8 @@
 package projects.jaseem.triptimes.ui.screens.articlesearch
 
+import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
@@ -10,17 +10,20 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_article_search.*
-import projects.jaseem.triptimes.App
 import projects.jaseem.triptimes.R
-import projects.jaseem.triptimes.data.model.ArticleSearchModel
+import projects.jaseem.triptimes.domain.model.ArticleResult
+import projects.jaseem.triptimes.domain.model.ArticleSearchModel
+import projects.jaseem.triptimes.extensions.string
 import projects.jaseem.triptimes.state.Resource
 import projects.jaseem.triptimes.state.ResourceState
-import java.util.*
+import projects.jaseem.triptimes.ui.screens.articledetail.ArticleDetailActivity
 import javax.inject.Inject
-import kotlin.concurrent.timerTask
 
 
-class ArticleSearchActivity : AppCompatActivity() {
+class ArticleSearchActivity :
+    AppCompatActivity(),
+    OnBottomReachedListener,
+    OnArticleClickListener {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -33,7 +36,7 @@ class ArticleSearchActivity : AppCompatActivity() {
         setContentView(R.layout.activity_article_search)
 
         rvArticles.layoutManager = LinearLayoutManager(this)
-        searchAdapter = ArticleSearchAdapter(listOf(), this)
+        searchAdapter = ArticleSearchAdapter(this, listOf(), this, this)
         rvArticles.adapter = searchAdapter
 
         viewModel = ViewModelProvider(this, viewModelFactory)
@@ -46,11 +49,16 @@ class ArticleSearchActivity : AppCompatActivity() {
         setQueryListener()
     }
 
+    override fun onResume() {
+        super.onResume()
+        svSearch.clearFocus()
+    }
+
     private fun setQueryListener() {
         svSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
-                    viewModel.getArticle(it)
+                    viewModel.getArticle(it, 1)
                 }
 
                 return false
@@ -66,19 +74,40 @@ class ArticleSearchActivity : AppCompatActivity() {
         resource?.let { res ->
             when (res.state) {
                 ResourceState.LOADING -> {
-//                    Show spinner
+                    pbLoading.visibility = View.VISIBLE
                 }
                 ResourceState.SUCCESS -> {
-//                    Update rv
+                    pbLoading.visibility = View.GONE
                     res.data?.searchResults?.let {
-                        searchAdapter.updateItems(it)
+                        tvShowingResultsFor.text =
+                            string(R.string.showing_results_for, res.data.searchTerm)
+                        tvShowingResultsFor.visibility = View.VISIBLE
+                        if (res.data.isFirstPage) {
+                            searchAdapter.updateItems(it)
+                        } else {
+                            searchAdapter.addItems(it)
+                        }
                     }
                 }
                 ResourceState.ERROR -> {
+                    pbLoading.visibility = View.GONE
 //                    Update error
                 }
             }
         }
     }
 
+    override fun onBottomReached(pos: Int) {
+        viewModel.articleSearchModel.value?.data?.let { model ->
+            viewModel.getArticle(model.searchTerm, model.pagesShowing + 1)
+        }
+    }
+
+    override fun onArticleClicked(article: ArticleResult) {
+        val intent = Intent(this, ArticleDetailActivity::class.java)
+        intent.putExtra("clickedArticle", article)
+
+        startActivity(intent)
+        overridePendingTransition(R.anim.slide_in, R.anim.slide_out)
+    }
 }

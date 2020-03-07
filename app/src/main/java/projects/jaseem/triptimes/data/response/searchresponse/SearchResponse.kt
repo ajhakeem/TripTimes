@@ -1,6 +1,7 @@
 package projects.jaseem.triptimes.data.response.searchresponse
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 
 data class SearchResponse(
@@ -25,7 +26,7 @@ data class SearchResponse(
         @SerializedName("headline")
         val headline: HeadlineResponse,
         @SerializedName("pub_date")
-        val pub_date: String
+        val pub_date: Date
     )
 
     class MultimediaResponse(

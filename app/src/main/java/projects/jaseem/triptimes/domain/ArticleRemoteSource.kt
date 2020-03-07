@@ -11,7 +11,7 @@ import javax.inject.Singleton
 class ArticleRemoteSource
 @Inject constructor(private val nyTimesApiService: NYTimesApiService) {
 
-    fun getArticles(searchQuery: String): Single<SearchResponse> =
-        nyTimesApiService.searchArticle(searchQuery)
+    fun getArticles(searchQuery: String, page: Int): Single<SearchResponse> =
+        nyTimesApiService.searchArticle(searchQuery, page.toString())
 
 }

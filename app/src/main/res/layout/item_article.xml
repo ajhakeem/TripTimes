@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/clArticle"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="12dp"
@@ -32,23 +34,6 @@
         app:layout_constraintVertical_bias="0"
         android:layout_marginTop="8dp"
         tools:text="Title" />
-
-<!--    <TextView-->
-<!--        android:id="@+id/tvSnippet"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:ellipsize="end"-->
-<!--        android:maxLines="2"-->
-<!--        android:textColor="@android:color/black"-->
-<!--        android:textSize="12sp"-->
-<!--        android:visibility="gone"-->
-<!--        app:layout_constraintBottom_toTopOf="@id/vDivider"-->
-<!--        app:layout_constraintEnd_toStartOf="@id/gV67"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/tvTitle"-->
-<!--        app:layout_constraintVertical_bias="0"-->
-<!--        android:layout_marginBottom="4dp"-->
-<!--        tools:text="This is a short snippet of the article, it should be no longer than 2 lines, and the end should be ellipsized if it is working correctly" />-->
 
     <TextView
         android:id="@+id/tvPublishedDate"

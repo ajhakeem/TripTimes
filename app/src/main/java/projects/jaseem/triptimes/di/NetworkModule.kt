@@ -5,7 +5,7 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import projects.jaseem.triptimes.domain.ArticleRemoteSource
-import projects.jaseem.triptimes.domain.ArticleRepository
+import projects.jaseem.triptimes.domain.repository.ArticleRepository
 import projects.jaseem.triptimes.domain.nytimesservice.NYTimesApiService
 import projects.jaseem.triptimes.ui.screens.articlesearch.ArticleSearchViewModel
 import retrofit2.Retrofit
