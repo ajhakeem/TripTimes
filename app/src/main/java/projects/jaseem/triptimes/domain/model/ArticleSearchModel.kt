@@ -14,7 +14,8 @@ data class ArticleSearchModel (
     val searchResults : List<ArticleResult>? = null,
     var searchTerm: String,
     var pagesShowing: Int = 1,
-    var isFirstPage: Boolean = true
+    var isFirstPage: Boolean = true,
+    val hideEmptyState: Boolean = false
 )
 
 @Parcelize
@@ -73,6 +74,7 @@ fun SearchResponse.toModel(
         searchResults = results,
         searchTerm = searchTerm,
         isFirstPage = isFirstPage,
-        pagesShowing = pagesShowing
+        pagesShowing = pagesShowing,
+        hideEmptyState = true
     )
 }

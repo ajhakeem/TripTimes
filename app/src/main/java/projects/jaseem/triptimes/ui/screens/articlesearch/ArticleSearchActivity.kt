@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isGone
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,6 +48,16 @@ class ArticleSearchActivity :
         })
 
         setQueryListener()
+
+        setSwipeRefreshListener()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        viewModel.articleSearchModelLiveData.value?.data?.let { data ->
+            layoutEmptyState.isGone = data.hideEmptyState
+        }
     }
 
     override fun onResume() {
@@ -58,7 +69,7 @@ class ArticleSearchActivity :
         svSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query?.let {
-                    viewModel.getArticle(it, 1)
+                    viewModel.getArticle(it, 1, false)
                 }
 
                 return false
@@ -68,6 +79,15 @@ class ArticleSearchActivity :
                 return false
             }
         })
+    }
+
+    private fun setSwipeRefreshListener() {
+        srlArticles.setOnRefreshListener {
+            viewModel.articleSearchModelLiveData.value?.data?.let { model ->
+                viewModel.getArticle(model.searchTerm, 1, true)
+                srlArticles.isRefreshing = false
+            }
+        }
     }
 
     private fun updateList(resource: Resource<ArticleSearchModel>?) {
@@ -103,7 +123,7 @@ class ArticleSearchActivity :
 
     override fun onBottomReached(pos: Int) {
         viewModel.articleSearchModelLiveData.value?.data?.let { model ->
-            viewModel.getArticle(model.searchTerm, model.pagesShowing + 1)
+            viewModel.getArticle(model.searchTerm, model.pagesShowing + 1, false)
         }
     }
 

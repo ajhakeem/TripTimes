@@ -21,9 +21,9 @@ class ArticleSearchViewModel
     val articleSearchModelLiveData = MutableLiveData<Resource<ArticleSearchModel>>()
     private val disposable = CompositeDisposable()
 
-    fun getArticle(searchTerm: String, page: Int) {
+    fun getArticle(searchTerm: String, page: Int, isForceUpdate: Boolean) {
         disposable.add(
-            searchArticlesUseCase.execute(searchTerm, page, false)
+            searchArticlesUseCase.execute(searchTerm, page, isForceUpdate)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe {
                     articleSearchModelLiveData.setLoading()
