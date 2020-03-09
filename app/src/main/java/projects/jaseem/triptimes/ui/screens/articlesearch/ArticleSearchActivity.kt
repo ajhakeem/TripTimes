@@ -28,7 +28,7 @@ class ArticleSearchActivity :
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     lateinit var viewModel: ArticleSearchViewModel
-    lateinit var searchAdapter: ArticleSearchAdapter
+    private lateinit var searchAdapter: ArticleSearchAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -75,9 +75,11 @@ class ArticleSearchActivity :
             when (res.state) {
                 ResourceState.LOADING -> {
                     pbLoading.visibility = View.VISIBLE
+                    layoutEmptyState.visibility = View.GONE
                 }
                 ResourceState.SUCCESS -> {
                     pbLoading.visibility = View.GONE
+                    gSearchResults.visibility = View.VISIBLE
                     res.data?.searchResults?.let {
                         tvShowingResultsFor.text =
                             string(R.string.showing_results_for, res.data.searchTerm)
@@ -105,7 +107,7 @@ class ArticleSearchActivity :
 
     override fun onArticleClicked(article: ArticleResult) {
         val intent = Intent(this, ArticleDetailActivity::class.java)
-        intent.putExtra("clickedArticle", article)
+        intent.putExtra(ArticleDetailActivity.CLICKED_ARTICLE, article)
 
         startActivity(intent)
         overridePendingTransition(R.anim.slide_in, R.anim.slide_out)

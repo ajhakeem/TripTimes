@@ -19,12 +19,11 @@ class ArticleSearchAdapter(
     private val context: Context,
     private val articleList: List<ArticleResult>,
     private val onBottomReachedListener: OnBottomReachedListener,
-    private val onArticleClickListener: OnArticleClickListener
+    private val articleClickListener: OnArticleClickListener
 ) : RecyclerView.Adapter<ArticleSearchAdapter.ArticleViewHolder>() {
 
     var items: MutableList<ArticleResult> = this.articleList.toMutableList()
     var bottomReachedListener = this.onBottomReachedListener
-    var articleClickListener = this.onArticleClickListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         return ArticleViewHolder(
@@ -64,7 +63,7 @@ class ArticleSearchAdapter(
             }
 
             clArticle.setOnClickListener {
-                onArticleClickListener.onArticleClicked(article)
+                articleClickListener.onArticleClicked(article)
             }
         }
     }

@@ -9,5 +9,7 @@
     <string name="placeholder_article_headline">Article headline</string>
     <string name="thumbnail_prefix">https://www.nytimes.com/%1$s</string>
     <string name="published_on">Published on %1$s</string>
+    <string name="empty_state_title">See whats out there</string>
+    <string name="empty_state_prompt">Search a topic or keyword to get started</string>
     
 </resources>

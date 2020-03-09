@@ -27,7 +27,7 @@ class NetworkModule {
     @Singleton
     fun provideArticleRepository(): ArticleRepository =
         ArticleRepository(
-            provideArticleRemoteSource()
+            provideNyTimesApiService()
         )
 
     @Provides

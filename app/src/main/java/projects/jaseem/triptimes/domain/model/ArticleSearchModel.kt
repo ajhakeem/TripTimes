@@ -24,7 +24,9 @@ data class ArticleResult(
     val thumbnailUrl: String? = null,
     val publishedDateString: String? = null,
     val publishedDate: Date? = null,
-    var leadParagraph: String
+    var author: String,
+    var leadParagraph: String,
+    var shareLink: String
 ): Parcelable
 
 fun SearchResponse.toModel(
@@ -40,18 +42,16 @@ fun SearchResponse.toModel(
 
         if (doc.multimedia?.isNotEmpty() == true) {
             doc.multimedia.first().let { multimediaResponse ->
-                if (multimediaResponse.crop_name.toString().contains("article")) {
+                if (multimediaResponse.cropName.toString().contains("article")) {
                     articleThumbnail = string(R.string.thumbnail_prefix, multimediaResponse.url.toString())
                 }
             }
         }
 
         var date: String
-        var publishedDateString: String
 
         try {
             date = sdf.format(doc.pub_date)
-            publishedDateString = string(R.string.published_on, date)
         } catch (p: ParseException) {
             error(p)
         }
@@ -62,8 +62,10 @@ fun SearchResponse.toModel(
                 snippet = doc.snippet,
                 thumbnailUrl = articleThumbnail,
                 publishedDate = doc.pub_date,
-                publishedDateString = publishedDateString,
-                leadParagraph = doc.lead_paragraph
+                publishedDateString = date,
+                author = doc.byline.original.toString(),
+                leadParagraph = doc.lead_paragraph,
+                shareLink = doc.webUrl
         ))
     }
 

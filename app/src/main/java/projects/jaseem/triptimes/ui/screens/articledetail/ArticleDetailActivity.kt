@@ -1,10 +1,11 @@
 package projects.jaseem.triptimes.ui.screens.articledetail
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_article_detail.*
 import projects.jaseem.triptimes.R
@@ -14,21 +15,15 @@ import projects.jaseem.triptimes.extensions.drawable
 class ArticleDetailActivity : AppCompatActivity() {
 
     companion object {
-
-        private const val INTENT_NAME: String = "CLICKED_ARTICLE"
-
-        fun newIntent(context: Context, article: ArticleResult): Intent {
-            val intent = Intent(context, ArticleDetailActivity::class.java)
-            intent.putExtra(INTENT_NAME, article)
-            return intent
-        }
+        const val CLICKED_ARTICLE: String = "CLICKED_ARTICLE"
+//        const val SHARE_INTENT_EXTRA: String = "SHARE_INTENT_EXTRA"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_article_detail)
 
-        intent.getParcelableExtra<ArticleResult>("clickedArticle")?.let {
+        intent.getParcelableExtra<ArticleResult>(CLICKED_ARTICLE)?.let {
             updateDetailView(it)
         }
 
@@ -48,15 +43,38 @@ class ArticleDetailActivity : AppCompatActivity() {
         }
 
         tvPublishedDate.text = article.publishedDateString
+        tvAuthor.text = article.author
 
         tvLeadParagraph.text = article.leadParagraph
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == android.R.id.home) {
-            finish()
-            overridePendingTransition(R.anim.slide_l_to_r, R.anim.slide_r_to_l)
-            return true
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+                overridePendingTransition(R.anim.slide_l_to_r, R.anim.slide_r_to_l)
+                return true
+            }
+            R.id.shareButton -> {
+                intent.getParcelableExtra<ArticleResult>(CLICKED_ARTICLE)?.let {
+                    val intent = Intent(Intent.ACTION_SEND).apply {
+                        putExtra(Intent.EXTRA_TEXT, it.shareLink)
+                        type = "text/plain"
+                    }
+
+                    val shareIntent = Intent.createChooser(intent, "Share link using ")
+                    shareIntent.resolveActivity(packageManager)?.let {
+                        startActivity(shareIntent)
+                    }
+                }
+
+                return true
+            }
         }
 
         return super.onOptionsItemSelected(item)

@@ -17,7 +17,6 @@ data class SearchResponse(
     )
 
     class DocsResponse(
-        val web_url: String,
         @SerializedName("snippet")
         val snippet: String,
         val lead_paragraph: String,
@@ -26,19 +25,28 @@ data class SearchResponse(
         @SerializedName("headline")
         val headline: HeadlineResponse,
         @SerializedName("pub_date")
-        val pub_date: Date
+        val pub_date: Date,
+        @SerializedName("byline")
+        val byline: BylineResponse,
+        @SerializedName("web_url")
+        val webUrl: String
     )
 
     class MultimediaResponse(
         @SerializedName("crop_name")
-        val crop_name: String? = null,
+        val cropName: String? = null,
         @SerializedName("url")
         val url: String? = null
     )
 
     class HeadlineResponse(
-        val main: String? = null,
-        val print_headline: String? = null
+        @SerializedName("main")
+        val main: String? = null
+    )
+
+    class BylineResponse(
+        @SerializedName("original")
+        val original: String? = null
     )
 
 }
