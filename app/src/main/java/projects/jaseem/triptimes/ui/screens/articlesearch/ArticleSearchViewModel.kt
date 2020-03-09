@@ -5,36 +5,44 @@ import androidx.lifecycle.ViewModel
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import projects.jaseem.triptimes.state.Resource
-import projects.jaseem.triptimes.data.model.ArticleSearchModel
-import projects.jaseem.triptimes.data.model.toModel
-import projects.jaseem.triptimes.domain.RestApi
-import projects.jaseem.triptimes.domain.extensions.setError
-import projects.jaseem.triptimes.domain.extensions.setLoading
-import projects.jaseem.triptimes.domain.extensions.setSuccess
+import projects.jaseem.triptimes.domain.model.ArticleSearchModel
+import projects.jaseem.triptimes.domain.usecase.SearchArticlesUseCase
+import projects.jaseem.triptimes.extensions.setError
+import projects.jaseem.triptimes.extensions.setLoading
+import projects.jaseem.triptimes.extensions.setSuccess
+import javax.inject.Inject
 
 
 class ArticleSearchViewModel
-    : ViewModel() {
+@Inject constructor(
+    private val searchArticlesUseCase: SearchArticlesUseCase
+) : ViewModel() {
 
-    val articleSearchModel = MutableLiveData<Resource<ArticleSearchModel>>()
-    val disposable = CompositeDisposable()
+    val articleSearchModelLiveData = MutableLiveData<Resource<ArticleSearchModel>>()
+    private val disposable = CompositeDisposable()
 
-    fun getArticle(searchTerm: String) {
+    fun getArticle(searchTerm: String, page: Int, isForceUpdate: Boolean) {
         disposable.add(
-            RestApi.nyTimesClient.searchArticle(searchTerm)
+            searchArticlesUseCase.execute(searchTerm, page, isForceUpdate)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe {
-                    articleSearchModel.setLoading()
-                }
-                .map { response ->
-                    response.toModel()
+                    articleSearchModelLiveData.setLoading()
                 }
                 .subscribe({
-                    articleSearchModel.setSuccess(it)
+                    articleSearchModelLiveData.setSuccess(it)
                     }, {
-                    articleSearchModel.setError(it.message)
+                    // Parse error here for codes and determine message
+                    // Log/send error if needed
+                    articleSearchModelLiveData.setError(it.message)
                 })
         )
+    }
+
+    override fun onCleared() {
+        if (!disposable.isDisposed) {
+            disposable.dispose()
+        }
+        super.onCleared()
     }
 
 }

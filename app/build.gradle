@@ -55,7 +55,10 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
 
     // Dagger 2
-    implementation 'com.google.dagger:dagger:2.10'
+    implementation 'com.google.dagger:dagger:2.23'
+    implementation 'com.google.dagger:dagger-android-support:2.23'
+    kapt 'com.google.dagger:dagger-android-processor:2.23'
+    kapt 'com.google.dagger:dagger-compiler:2.23'
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
@@ -65,11 +68,20 @@ dependencies {
 
     // RxJava
     implementation "io.reactivex.rxjava2:rxjava:2.2.18"
+    implementation "io.reactivex.rxjava2:rxandroid:2.1.0"
 
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
 
+    // Stetho
+    implementation 'com.facebook.stetho:stetho:1.5.1'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    testImplementation "android.arch.core:core-testing:1.1.1"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
+    testImplementation 'org.mockito:mockito-inline:2.21.0'
+
 }

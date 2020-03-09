@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">TripTimes</string>
+
+
+    <!--  Article Search Activity  -->
+    <string name="showing_results_for">Showing results for \'%1$s\'</string>
+    
+    <!--  Article item  -->
+    <string name="placeholder_article_headline">Article headline</string>
+    <string name="thumbnail_prefix">https://www.nytimes.com/%1$s</string>
+    <string name="published_on">Published on %1$s</string>
+    <string name="empty_state_title">See whats out there</string>
+    <string name="empty_state_prompt">Search a topic or keyword to get started</string>
+    <string name="error_state_title">Oops! Something went wrong</string>
+    <string name="error_state_prompt">This one is our bad, try your search again!</string>
+    
 </resources>
