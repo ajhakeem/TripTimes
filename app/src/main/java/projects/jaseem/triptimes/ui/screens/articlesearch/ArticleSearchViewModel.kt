@@ -8,6 +8,7 @@ import projects.jaseem.triptimes.state.Resource
 import projects.jaseem.triptimes.domain.model.ArticleSearchModel
 import projects.jaseem.triptimes.domain.model.toModel
 import projects.jaseem.triptimes.domain.repository.ArticleRepository
+import projects.jaseem.triptimes.domain.usecase.SearchArticlesUseCase
 import projects.jaseem.triptimes.extensions.setError
 import projects.jaseem.triptimes.extensions.setLoading
 import projects.jaseem.triptimes.extensions.setSuccess
@@ -16,7 +17,7 @@ import javax.inject.Inject
 
 class ArticleSearchViewModel
 @Inject constructor(
-    private val articleRepository: ArticleRepository
+    private val searchArticlesUseCase: SearchArticlesUseCase
 ) : ViewModel() {
 
     val articleSearchModel = MutableLiveData<Resource<ArticleSearchModel>>()
@@ -24,13 +25,10 @@ class ArticleSearchViewModel
 
     fun getArticle(searchTerm: String, page: Int) {
         disposable.add(
-            articleRepository.searchArticles(searchTerm, page)
+            searchArticlesUseCase.execute(searchTerm, page, false)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe {
                     articleSearchModel.setLoading()
-                }
-                .map { response ->
-                    response.toModel(searchTerm, page == 1, page)
                 }
                 .subscribe({
                     articleSearchModel.setSuccess(it)

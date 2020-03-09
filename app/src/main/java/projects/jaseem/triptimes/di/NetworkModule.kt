@@ -4,9 +4,9 @@ import com.facebook.stetho.okhttp3.StethoInterceptor
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
-import projects.jaseem.triptimes.domain.ArticleRemoteSource
 import projects.jaseem.triptimes.domain.repository.ArticleRepository
 import projects.jaseem.triptimes.domain.nytimesservice.NYTimesApiService
+import projects.jaseem.triptimes.domain.usecase.SearchArticlesUseCase
 import projects.jaseem.triptimes.ui.screens.articlesearch.ArticleSearchViewModel
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -20,8 +20,13 @@ class NetworkModule {
     @Provides
     fun provideArticleSearchViewModel(): ArticleSearchViewModel =
         ArticleSearchViewModel(
-            provideArticleRepository()
+            provideSearchArticleUseCase()
         )
+
+    @Provides
+    @Singleton
+    fun provideSearchArticleUseCase(): SearchArticlesUseCase =
+        SearchArticlesUseCase(provideArticleRepository())
 
     @Provides
     @Singleton
@@ -29,11 +34,6 @@ class NetworkModule {
         ArticleRepository(
             provideNyTimesApiService()
         )
-
-    @Provides
-    @Singleton
-    fun provideArticleRemoteSource(): ArticleRemoteSource =
-        ArticleRemoteSource(provideNyTimesApiService())
 
     @Provides
     fun provideNyTimesApiService(): NYTimesApiService =
