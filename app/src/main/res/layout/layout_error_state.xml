@@ -6,40 +6,39 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivEmptyState"
+        android:id="@+id/ivErrorState"
         android:layout_width="160dp"
         android:layout_height="160dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tvEmptyStateTitle"
+        app:layout_constraintBottom_toTopOf="@id/tvErrorStateTitle"
         android:layout_marginTop="8dp"
-        android:src="@drawable/ic_search_24dp"
-        android:tint="@color/colorPrimary"/>
+        android:src="@drawable/ic_error_24dp" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvEmptyStateTitle"
+        android:id="@+id/tvErrorStateTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/empty_state_title"
-        android:textColor="@color/colorPrimaryDark"
+        android:text="@string/error_state_title"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ivEmptyState"
+        app:layout_constraintTop_toBottomOf="@id/ivErrorState"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tvEmptyStatePrompt"
+        app:layout_constraintBottom_toTopOf="@id/tvErrorStatePrompt"
         android:layout_marginTop="16dp" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvEmptyStatePrompt"
+        android:id="@+id/tvErrorStatePrompt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/empty_state_prompt"
+        android:text="@string/error_state_prompt"
         android:textSize="16sp"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@android:color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvEmptyStateTitle"
+        app:layout_constraintTop_toBottomOf="@id/tvErrorStateTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"/>

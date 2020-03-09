@@ -11,6 +11,7 @@ import projects.jaseem.triptimes.ui.screens.articlesearch.ArticleSearchViewModel
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 
@@ -54,6 +55,9 @@ class NetworkModule {
     fun provideOkHttp(): OkHttpClient =
         OkHttpClient().newBuilder()
             .addNetworkInterceptor(StethoInterceptor())
+            .connectTimeout(8, TimeUnit.SECONDS)
+            .readTimeout(8, TimeUnit.SECONDS)
+            .writeTimeout(8, TimeUnit.SECONDS)
             .build()
 
 }

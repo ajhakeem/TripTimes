@@ -42,7 +42,7 @@ class ArticleSearchActivity :
         viewModel = ViewModelProvider(this, viewModelFactory)
             .get(ArticleSearchViewModel::class.java)
 
-        viewModel.articleSearchModel.observe(this, Observer {
+        viewModel.articleSearchModelLiveData.observe(this, Observer {
             updateList(it)
         })
 
@@ -76,6 +76,7 @@ class ArticleSearchActivity :
                 ResourceState.LOADING -> {
                     pbLoading.visibility = View.VISIBLE
                     layoutEmptyState.visibility = View.GONE
+                    layoutErrorState.visibility = View.GONE
                 }
                 ResourceState.SUCCESS -> {
                     pbLoading.visibility = View.GONE
@@ -93,14 +94,15 @@ class ArticleSearchActivity :
                 }
                 ResourceState.ERROR -> {
                     pbLoading.visibility = View.GONE
-//                    Update error
+                    gSearchResults.visibility = View.GONE
+                    layoutErrorState.visibility = View.VISIBLE
                 }
             }
         }
     }
 
     override fun onBottomReached(pos: Int) {
-        viewModel.articleSearchModel.value?.data?.let { model ->
+        viewModel.articleSearchModelLiveData.value?.data?.let { model ->
             viewModel.getArticle(model.searchTerm, model.pagesShowing + 1)
         }
     }

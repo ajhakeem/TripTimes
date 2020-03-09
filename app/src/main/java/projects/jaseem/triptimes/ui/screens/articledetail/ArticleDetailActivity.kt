@@ -16,7 +16,6 @@ class ArticleDetailActivity : AppCompatActivity() {
 
     companion object {
         const val CLICKED_ARTICLE: String = "CLICKED_ARTICLE"
-//        const val SHARE_INTENT_EXTRA: String = "SHARE_INTENT_EXTRA"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,7 +67,7 @@ class ArticleDetailActivity : AppCompatActivity() {
                     }
 
                     val shareIntent = Intent.createChooser(intent, "Share link using ")
-                    shareIntent.resolveActivity(packageManager)?.let {
+                    intent.resolveActivity(packageManager)?.let {
                         startActivity(shareIntent)
                     }
                 }

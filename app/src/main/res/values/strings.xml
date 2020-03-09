@@ -11,5 +11,7 @@
     <string name="published_on">Published on %1$s</string>
     <string name="empty_state_title">See whats out there</string>
     <string name="empty_state_prompt">Search a topic or keyword to get started</string>
+    <string name="error_state_title">Oops! Something went wrong</string>
+    <string name="error_state_prompt">This one is our bad, try your search again!</string>
     
 </resources>

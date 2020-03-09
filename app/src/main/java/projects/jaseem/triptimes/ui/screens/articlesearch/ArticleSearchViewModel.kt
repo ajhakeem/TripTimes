@@ -6,8 +6,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import projects.jaseem.triptimes.state.Resource
 import projects.jaseem.triptimes.domain.model.ArticleSearchModel
-import projects.jaseem.triptimes.domain.model.toModel
-import projects.jaseem.triptimes.domain.repository.ArticleRepository
 import projects.jaseem.triptimes.domain.usecase.SearchArticlesUseCase
 import projects.jaseem.triptimes.extensions.setError
 import projects.jaseem.triptimes.extensions.setLoading
@@ -20,7 +18,7 @@ class ArticleSearchViewModel
     private val searchArticlesUseCase: SearchArticlesUseCase
 ) : ViewModel() {
 
-    val articleSearchModel = MutableLiveData<Resource<ArticleSearchModel>>()
+    val articleSearchModelLiveData = MutableLiveData<Resource<ArticleSearchModel>>()
     private val disposable = CompositeDisposable()
 
     fun getArticle(searchTerm: String, page: Int) {
@@ -28,14 +26,23 @@ class ArticleSearchViewModel
             searchArticlesUseCase.execute(searchTerm, page, false)
                 .subscribeOn(Schedulers.io())
                 .doOnSubscribe {
-                    articleSearchModel.setLoading()
+                    articleSearchModelLiveData.setLoading()
                 }
                 .subscribe({
-                    articleSearchModel.setSuccess(it)
+                    articleSearchModelLiveData.setSuccess(it)
                     }, {
-                    articleSearchModel.setError(it.message)
+                    // Parse error here for codes and determine message
+                    // Log/send error if needed
+                    articleSearchModelLiveData.setError(it.message)
                 })
         )
+    }
+
+    override fun onCleared() {
+        if (!disposable.isDisposed) {
+            disposable.dispose()
+        }
+        super.onCleared()
     }
 
 }
