@@ -37,7 +37,7 @@ class ArticleSearchActivity :
         setContentView(R.layout.activity_article_search)
 
         rvArticles.layoutManager = LinearLayoutManager(this)
-        searchAdapter = ArticleSearchAdapter(this, listOf(), this, this)
+        searchAdapter = ArticleSearchAdapter(listOf(), this, this)
         rvArticles.adapter = searchAdapter
 
         viewModel = ViewModelProvider(this, viewModelFactory)

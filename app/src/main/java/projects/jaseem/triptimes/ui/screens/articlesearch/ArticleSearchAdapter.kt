@@ -1,6 +1,5 @@
 package projects.jaseem.triptimes.ui.screens.articlesearch
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,6 @@ import projects.jaseem.triptimes.extensions.drawable
 
 
 class ArticleSearchAdapter(
-    private val context: Context,
     private val articleList: List<ArticleResult>,
     private val onBottomReachedListener: OnBottomReachedListener,
     private val articleClickListener: OnArticleClickListener
@@ -27,7 +25,7 @@ class ArticleSearchAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
         return ArticleViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.item_article, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_article, parent, false)
         )
     }
 
@@ -55,7 +53,7 @@ class ArticleSearchAdapter(
             tvPublishedDate.text = article.publishedDateString
 
             if (article.thumbnailUrl != null) {
-                Glide.with(context)
+                Glide.with(holder.itemView)
                     .load(article.thumbnailUrl)
                     .into(ivThumbnail)
             } else {

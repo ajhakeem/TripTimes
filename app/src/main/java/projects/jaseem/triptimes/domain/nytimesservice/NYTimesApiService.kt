@@ -10,7 +10,7 @@ interface NYTimesApiService {
 
     companion object {
         const val searchBaseUrl = "search/v2/"
-        const val API_KEY = "OKsEwghCzAPR3kRr7Hp51cFn2tMfXWgj"
+        const val API_KEY = "CjUOKdhOgnjaBunGKNJt5OAuU2TNJcQd"
     }
 
     @GET(searchBaseUrl + "articlesearch.json")
